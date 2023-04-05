@@ -1,4 +1,5 @@
 #include "selection_sort.hpp"
+#include <bits/stdc++.h>
 
 selection::selection(){
 
@@ -7,37 +8,31 @@ selection::selection(){
 selection::~selection(){
     
 }
- 
-// Return minimum index
-int selection::minIndex(std::vector<int> sort_me, int i, int j)
+
+void selection::sort(std::vector<int> &sort_me)
 {
-    if (i == j)
-        return i;
- 
-    // Find minimum of remaining elements
-    int k = minIndex(sort_me, i + 1, j);
- 
-    // Return minimum of current and remaining.
-    return (sort_me[i] < sort_me[k])? i : k;
-}
- 
-void selection::sort(std::vector<int> &sort_me, int n, int index){
-// Return when starting and size are same
-    int tmp;
-    if (index == n)
-       return;
-    // calling minimum index function for minimum index
-    int k = selection::minIndex(sort_me, index, n-1);
- 
-    // Swapping when index and minimum index are not same
-    if (k != index){
-        tmp = sort_me[index];
-        sort_me[index] = sort_me[k];
-        sort_me[k] = tmp;
+    int n = sort_me.size();
+    int i, j, min_idx;
+    // One by one move boundary of
+    // unsorted subarray
+    for (i = 0; i < n-1; i++)
+    {
+        // Find the minimum element in
+        // unsorted array
+        min_idx = i;
+        for (j = i+1; j < n; j++)
+        {
+          if (sort_me[j] < sort_me[min_idx])
+              min_idx = j;
+        }
+        // Swap the found minimum element
+        // with the first element
+        if (min_idx!=i)
+            std::swap(sort_me[min_idx], sort_me[i]);
+
+        std::this_thread::sleep_for(std::chrono::milliseconds(50));
+        on_swap_alert.emit();
     }
- 
-    // Recursively calling selection sort function
-    selection::sort(sort_me, n, index + 1);
-    on_swap_alert.emit();
-    std::this_thread::sleep_for(std::chrono::milliseconds(50));
+
 }
+ 
