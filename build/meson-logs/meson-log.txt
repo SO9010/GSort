@@ -1,0 +1,39 @@
+Build started at 2023-03-19T15:01:16.483628
+Main binary: /usr/bin/python
+Build Options: 
+Python system: Linux
+The Meson build system
+Version: 1.0.1
+Source dir: /home/samio/Projects/Sorting_Visulizer
+Build dir: /home/samio/Projects/Sorting_Visulizer/build
+Build type: native build
+Project name: Sorting Visulizer
+Project version: undefined
+C++ compiler for the host machine: c++ (gcc 12.2.1 "c++ (GCC) 12.2.1 20230201")
+C++ linker for the host machine: c++ ld.bfd 2.40
+C++ compiler for the build machine: c++ (gcc 12.2.1 "c++ (GCC) 12.2.1 20230201")
+C++ linker for the build machine: c++ ld.bfd 2.40
+Build machine cpu family: x86_64
+Build machine cpu: x86_64
+Host machine cpu family: x86_64
+Host machine cpu: x86_64
+Target machine cpu family: x86_64
+Target machine cpu: x86_64
+Dependency gtkmm-4.0 found: YES 4.8.0 (cached)
+Dependency threads found: YES unknown (cached)
+Build targets in project: 1
+
+Found ninja-1.11.1 at /usr/bin/ninja
+Running compile:
+Working directory:  /home/samio/Projects/Sorting_Visulizer/build/meson-private/tmpo09pm3lq
+Command line:  c++ /home/samio/Projects/Sorting_Visulizer/build/meson-private/tmpo09pm3lq/testfile.cpp -o /home/samio/Projects/Sorting_Visulizer/build/meson-private/tmpo09pm3lq/output.obj -c -D_FILE_OFFSET_BITS=64 -O0 -fpermissive --print-search-dirs 
+
+Code:
+ 
+Compiler stdout:
+ install: /usr/lib/gcc/x86_64-pc-linux-gnu/12.2.1/
+programs: =/usr/lib/gcc/x86_64-pc-linux-gnu/12.2.1/:/usr/lib/gcc/x86_64-pc-linux-gnu/12.2.1/:/usr/lib/gcc/x86_64-pc-linux-gnu/:/usr/lib/gcc/x86_64-pc-linux-gnu/12.2.1/:/usr/lib/gcc/x86_64-pc-linux-gnu/:/usr/lib/gcc/x86_64-pc-linux-gnu/12.2.1/../../../../x86_64-pc-linux-gnu/bin/x86_64-pc-linux-gnu/12.2.1/:/usr/lib/gcc/x86_64-pc-linux-gnu/12.2.1/../../../../x86_64-pc-linux-gnu/bin/
+libraries: =/usr/lib/gcc/x86_64-pc-linux-gnu/12.2.1/:/usr/lib/gcc/x86_64-pc-linux-gnu/12.2.1/../../../../x86_64-pc-linux-gnu/lib/x86_64-pc-linux-gnu/12.2.1/:/usr/lib/gcc/x86_64-pc-linux-gnu/12.2.1/../../../../x86_64-pc-linux-gnu/lib/../lib/:/usr/lib/gcc/x86_64-pc-linux-gnu/12.2.1/../../../x86_64-pc-linux-gnu/12.2.1/:/usr/lib/gcc/x86_64-pc-linux-gnu/12.2.1/../../../../lib/:/lib/x86_64-pc-linux-gnu/12.2.1/:/lib/../lib/:/usr/lib/x86_64-pc-linux-gnu/12.2.1/:/usr/lib/../lib/:/usr/lib/gcc/x86_64-pc-linux-gnu/12.2.1/../../../../x86_64-pc-linux-gnu/lib/:/usr/lib/gcc/x86_64-pc-linux-gnu/12.2.1/../../../:/lib/:/usr/lib/
+
+Compiler stderr:
+ 
