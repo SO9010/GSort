@@ -38,15 +38,11 @@ protected:
     Gtk::ColorButton m_background_colour;
     Visulizer m_visulizer;
 
-    selection m_selection;
-
-    Glib::Dispatcher m_Dispatcher;
-    std::thread* m_WorkerThread;
-
     // Widget signal handeling
     void handle_signals();
     void on_start_clicked();
     void on_range_change();
     void on_forground_color_change();
     void beep();
+
 };

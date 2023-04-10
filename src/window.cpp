@@ -7,8 +7,7 @@ s_window::s_window() :
     m_Scale_Digits(m_adjustment_digits),
     start("start"),
     stop("stop"),
-    m_forground_colour({1,1,1}),
-    m_WorkerThread(nullptr)
+    m_forground_colour({1,1,1})
 
 {
     set_title("Sorting Algorithm Visulizer");
@@ -104,7 +103,21 @@ void s_window::handle_signals(){
     start.signal_clicked().connect(sigc::mem_fun(*this, &s_window::on_start_clicked));
 
 }
+void printArray(std::vector<int>& arr) {
+    for (int i = 0; i < arr.size(); ++i) {
+        std::cout << arr[i] << " ";
+    }
+    std::cout << std::endl;
+}
 void s_window::on_start_clicked(){
+    static selection m_selection;
+    int numThreads = 2;
+    int index = 0;
+    for (int i = 0; i < m_visulizer.get_display_vec().size(); i++){
+        m_selection.sort(std::ref(m_visulizer.get_display_vec()), std::ref(index), std::ref(numThreads));
+        std::cout << i << std::endl;
+        m_visulizer.draw();
+    }
 }
 void s_window::beep(){
     std::cout << "asdkj" << std::endl;

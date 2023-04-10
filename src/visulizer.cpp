@@ -5,8 +5,6 @@
 #include <chrono>
 #include <thread>
 
-// WE NEED A STATIC ARRAY
-
 Visulizer::Visulizer(){
     set_content_width(590);
     set_content_height(300);
