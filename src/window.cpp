@@ -7,8 +7,8 @@ s_window::s_window() :
     m_Scale_Digits(m_adjustment_digits),
     start("start"),
     stop("stop"),
+    randomize("r"),
     m_forground_colour({1,1,1})
-
 {
     set_title("Sorting Algorithm Visulizer");
     set_size_request(400, 300);
@@ -19,51 +19,15 @@ s_window::s_window() :
     auto VBox = Gtk::make_managed<Gtk::Box>(Gtk::Orientation::VERTICAL,5);
     
     algorithm_selection.set_size_request(150, 20);
-    m_refTreeModel = Gtk::ListStore::create(m_Columns);
-    algorithm_selection.set_model(m_refTreeModel);
-
-    Gtk::TreeModel::Row row = *(m_refTreeModel->append());
-    row[m_Columns.m_col_id] = 1;
-    row[m_Columns.m_col_name] = "Selection Sort";
-
-    row = *(m_refTreeModel->append());
-    row[m_Columns.m_col_id] = 2;
-    row[m_Columns.m_col_name] = "Bubble Sort";
-
-    row = *(m_refTreeModel->append());
-    row[m_Columns.m_col_id] = 3;
-    row[m_Columns.m_col_name] = "Insertion Sort";
-
-    row = *(m_refTreeModel->append());
-    row[m_Columns.m_col_id] = 4;
-    row[m_Columns.m_col_name] = "Merge Sort";
-
-    row = *(m_refTreeModel->append());
-    row[m_Columns.m_col_id] = 5;
-    row[m_Columns.m_col_name] = "Quick Sort";
-
-    row = *(m_refTreeModel->append());
-    row[m_Columns.m_col_id] = 6;
-    row[m_Columns.m_col_name] = "Heap Sort";
-
-    row = *(m_refTreeModel->append());
-    row[m_Columns.m_col_id] = 7;
-    row[m_Columns.m_col_name] = "Counting Sort";
-
-    row = *(m_refTreeModel->append());
-    row[m_Columns.m_col_id] = 8;
-    row[m_Columns.m_col_name] = "Radix Sort";
-    
-    row = *(m_refTreeModel->append());
-    row[m_Columns.m_col_id] = 9;
-    row[m_Columns.m_col_name] = "Bucket Sort";
-    
-    row = *(m_refTreeModel->append());
-    row[m_Columns.m_col_id] = 10;
-    row[m_Columns.m_col_name] = "Bingo Sort";
-
-    algorithm_selection.pack_start(m_Columns.m_col_id);
-    algorithm_selection.pack_start(m_Columns.m_col_name);
+    algorithm_selection.append("1", "Selection Sort");
+    algorithm_selection.append("2", "Bubble Sort");
+    algorithm_selection.append("3", "Insertion Sort");
+    algorithm_selection.append("4", "Merge Sort");
+    algorithm_selection.append("5", "Quick Sort");
+    algorithm_selection.append("6", "Heap Sort");
+    algorithm_selection.append("7", "Counting Sort");
+    algorithm_selection.append("8", "Bucket Sort");
+    algorithm_selection.append("9", "Bingo Sort");
 
     m_HScale.set_digits(0);
     m_HScale.set_value(1);
@@ -73,6 +37,7 @@ s_window::s_window() :
     auto play_controls_layout = Gtk::make_managed<Gtk::Box>(Gtk::Orientation::HORIZONTAL,5);
     play_controls_layout->append(start);
     play_controls_layout->append(stop);
+    play_controls_layout->append(randomize);
 
     VBox->set_margin(5);
     VBox->set_homogeneous(true);
@@ -89,7 +54,10 @@ s_window::s_window() :
     HBox.append(m_visulizer);
 
     this->handle_signals();
+
     set_child(HBox);
+
+    go = true;
 }
 
 s_window::~s_window(){
@@ -101,24 +69,50 @@ void s_window::handle_signals(){
 
     m_HScale.signal_value_changed().connect(sigc::mem_fun(*this, &s_window::on_range_change));
     start.signal_clicked().connect(sigc::mem_fun(*this, &s_window::on_start_clicked));
+    stop.signal_clicked().connect(sigc::mem_fun(*this, &s_window::on_stop_clicked));
+    randomize.signal_clicked().connect(sigc::mem_fun(*this, &s_window::on_randomize_clicked));
+}
 
-}
-void printArray(std::vector<int>& arr) {
-    for (int i = 0; i < arr.size(); ++i) {
-        std::cout << arr[i] << " ";
-    }
-    std::cout << std::endl;
-}
-void s_window::on_start_clicked(){
+void run_selection_sort(Visulizer &m_visulizer, gboolean go) {
     static selection m_selection;
-    int numThreads = 2;
     int index = 0;
-    for (int i = 0; i < m_visulizer.get_display_vec().size(); i++){
-        m_selection.sort(std::ref(m_visulizer.get_display_vec()), std::ref(index), std::ref(numThreads));
-        std::cout << i << std::endl;
+        m_selection.sort(std::ref(m_visulizer.get_display_vec()), std::ref(index), go);
+    m_visulizer.draw();
+}
+
+void s_window::on_start_clicked(){
+    go = true;
+    int value;
+    try {
+    value = std::stoi(algorithm_selection.get_active_id());
+    }
+    catch (const std::invalid_argument& e) {
+    }
+
+    switch (value)
+    {
+    case 1:
+        for (int i = 0; i < m_visulizer.get_display_vec().size(); i++){
+        run_selection_sort(std::ref(m_visulizer), go);
         m_visulizer.draw();
+        g_usleep(20000);
+        }
+        break;
+    
+    default:
+        break;
     }
 }
+
+void s_window::on_stop_clicked(){
+    go = false;
+}
+
+void s_window::on_randomize_clicked(){
+    std::random_shuffle(m_visulizer.get_display_vec().begin(), m_visulizer.get_display_vec().end());
+    m_visulizer.draw();
+}
+
 void s_window::beep(){
     std::cout << "asdkj" << std::endl;
     m_visulizer.draw();
@@ -126,6 +120,7 @@ void s_window::beep(){
 
 void s_window::on_range_change(){
     m_visulizer.on_size_change(m_HScale.get_value());
+    m_visulizer.draw();
 }
 
 void s_window::on_forground_color_change(){

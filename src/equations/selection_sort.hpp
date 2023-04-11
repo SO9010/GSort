@@ -10,7 +10,7 @@ public:
     selection();
     ~selection();
 
-    void sort(std::vector<int> &sort_me, int &index, int &numThreads);
+    void sort(std::vector<int> &sort_me, int &index, gboolean go);
 
     sigc::signal<void()> on_swap_alert;
 protected:
