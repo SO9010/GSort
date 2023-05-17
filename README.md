@@ -1,2 +1,2 @@
 # GSort
-GShort is a gnu sorting visuliser.
+GSort is a gnu sorting visuliser.
