@@ -39,6 +39,7 @@ s_window::s_window() :
     play_controls_layout->append(stop);
     play_controls_layout->append(randomize);
 
+
     VBox->set_margin(5);
     VBox->set_homogeneous(true);
     VBox->append(algorithm_selection);
@@ -71,6 +72,7 @@ void s_window::handle_signals(){
     start.signal_clicked().connect(sigc::mem_fun(*this, &s_window::on_start_clicked));
     stop.signal_clicked().connect(sigc::mem_fun(*this, &s_window::on_stop_clicked));
     randomize.signal_clicked().connect(sigc::mem_fun(*this, &s_window::on_randomize_clicked));
+    algorithm_selection.signal_changed().connect(sigc::mem_fun(*this, &s_window::change_description));
 }
 
 void run_selection_sort(Visulizer &m_visulizer, gboolean go) {
@@ -93,9 +95,8 @@ void s_window::on_start_clicked(){
     {
     case 1:
         for (int i = 0; i < m_visulizer.get_display_vec().size(); i++){
-        run_selection_sort(std::ref(m_visulizer), go);
-        m_visulizer.draw();
-        g_usleep(20000);
+            m_visulizer.draw();
+            g_usleep(20000);
         }
         break;
     
@@ -113,11 +114,6 @@ void s_window::on_randomize_clicked(){
     m_visulizer.draw();
 }
 
-void s_window::beep(){
-    std::cout << "asdkj" << std::endl;
-    m_visulizer.draw();
-}
-
 void s_window::on_range_change(){
     m_visulizer.on_size_change(m_HScale.get_value());
     m_visulizer.draw();
@@ -125,4 +121,24 @@ void s_window::on_range_change(){
 
 void s_window::on_forground_color_change(){
     m_visulizer.change_forground(m_forground_colour.get_rgba());
+}
+
+void s_window::change_description(){
+    int value;
+    try {
+    value = std::stoi(algorithm_selection.get_active_id());
+    }
+    catch (const std::invalid_argument& e) {
+    }
+
+    switch (value)
+    {
+    case 1:
+        m_description.set_label("Selection sort is a simple sorting \nalgorithm with a time complexity \nof O(n^2).");
+
+        break;
+    
+    default:
+        break;
+    }
 }

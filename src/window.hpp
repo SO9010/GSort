@@ -47,6 +47,6 @@ protected:
     void on_range_change();
     void on_randomize_clicked();
     void on_forground_color_change();
-    void beep();
+    void change_description();
 
 };

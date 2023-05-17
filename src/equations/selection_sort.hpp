@@ -11,8 +11,8 @@ public:
     ~selection();
 
     void sort(std::vector<int> &sort_me, int &index, gboolean go);
+    int get_number_of_swaps(){return number_of_swaps;}
 
-    sigc::signal<void()> on_swap_alert;
 protected:
     int number_of_swaps = 0;
 };

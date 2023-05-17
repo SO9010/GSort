@@ -52,9 +52,10 @@ void Visulizer::on_draw(const Cairo::RefPtr<Cairo::Context>& cr, int width, int 
     cr->set_line_width(4.0);
     cr->set_source_rgba(forground.get_red(), forground.get_green(), forground.get_blue(), forground.get_alpha());
     for(int i = 0; i < 100; i++){
+        cr->set_source_rgba(forground.get_red(), forground.get_green(), forground.get_blue(), forground.get_alpha());
         cr->move_to(i * 6 + 5, height);
         cr->line_to(i * 6 + 5, height - display_vec[i]*3);
+        cr->stroke();
     }
-    cr->stroke();
     signal_drawing_complete.emit();
 }
